@@ -36,8 +36,9 @@ Create a file named `.env` in the project root:
 OPENAI_API_KEY=your_key_here
 BASE_URL=https://medlineplus.gov/
 
+---
 
-# How It Works
+## How It Works
 # Vanilla RAG
 
  - Retrieves relevant chunks from Chroma using the question
@@ -57,6 +58,7 @@ This project provides information only and is not medical advice.
 
 If retrieved pages do not contain enough information, the model should say:
 "Not enough information in the retrieved pages."
+
 
 
 
