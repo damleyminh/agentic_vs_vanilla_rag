@@ -28,36 +28,49 @@ The system ingests MedlinePlus pages, stores chunks in **ChromaDB**, and answers
 ---
 
 ## Setup
+1️⃣ Create `.env`
 
-### 1) Create `.env`
 Create a file named `.env` in the project root:
 
-```bash
-OPENAI_API_KEY=your_key_here
-BASE_URL=https://medlineplus.gov/
+```env
+OPENAI_API_KEY=your_openai_key_here
+
+
+2️⃣ Install dependencies (using uv)
+uv sync
+
+
+If you don’t have uv:
+
+pip install uv
 
 ---
+## How to Run
+✅ Step 1 — Build the vector database (run ONCE)
+This scrapes MedlinePlus and creates chroma_db.
+uv run python src/ingest.py
 
-## How It Works
-# Vanilla RAG
+⚠️ You MUST run this before Streamlit.
+Otherwise RAG will return empty answers.
 
- - Retrieves relevant chunks from Chroma using the question
- - Builds a context from top unique MedlinePlus sources
- - Generates a structured answer using ONLY retrieved context
+✅ Step 2 — Launch Streamlit app
+uv run streamlit run app.py
+Then open:
+http://localhost:8501
 
-# Agentic RAG
+💡 Example Questions
+What are the side effects of antibiotics?
+What is high blood pressure?
+What should I do if I have bipolar disorder and insomnia?
+What causes type 2 diabetes?
+When should I seek urgent care for chest pain?
 
- - Generates sub-queries for each section:
- - Overview, Causes, Symptoms, Diagnosis, Treatment, Urgent Care
- - Retrieves documents for each sub-query
- - Merges results and picks the best unique sources
- - Generates a structured answer using ONLY retrieved context
+⚠️ Notes / Safety
 
-# Notes / Safety
-This project provides information only and is not medical advice.
+This project is for educational purposes only.
+It does NOT provide medical advice.
 
-If retrieved pages do not contain enough information, the model should say:
-"Not enough information in the retrieved pages."
+Always consult a healthcare professional.
 
 
 
